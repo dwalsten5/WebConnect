@@ -86,10 +86,9 @@ Users.schema.user = new SimpleSchema({
         optional: true,
         blackbox: true
     },
-    // If you are sure you will never need to use role groups, then
-    // you can specify [String] as the type
     roles: {
-        type: [String],
+        type: Object,
+        blackbox: true,
         optional: true
     },
     // In order to avoid an 'Exception in setInterval callback' from Meteor
