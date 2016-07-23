@@ -29,6 +29,3 @@ fortawesome:fontawesome
 accounts-password
 underscore
 tap:i18n
-
-autopublish             # Publish all data to the clients (for prototyping)
-insecure                # Allow all DB writes from clients (for prototyping)
