@@ -4,3 +4,4 @@
  */
 
 import "./app-body.html";
+import "../components/app-loading/app-loading";
