@@ -1,0 +1,14 @@
+<template name="app_body">
+    <h1>App Body</h1>
+    Contained template:
+    <br>
+    <br>
+    <div id="content-container">
+        {{#if Template.subscriptionsReady}}
+            {{> Template.dynamic template=main}}
+        {{else}}
+            <!--TODO loading template -->
+            Loading...
+        {{/if}}
+    </div>
+</template>

@@ -23,10 +23,9 @@ ejson
 
 twbs:bootstrap
 peppelg:bootstrap-3-modal
-iron:router
-d3js:d3
+kadira:flow-router
+kadira:blaze-layout
 fortawesome:fontawesome
-reactive-var
 accounts-password
 underscore
 
