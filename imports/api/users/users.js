@@ -4,7 +4,12 @@
 import {Meteor} from "meteor/meteor";
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
 
-export const Users = Meteor.users;
+export const Users        = Meteor.users;
+export const ORGANIZATION = "organization";
+export const NAME         = "name";
+export const COUNTRY      = "country";
+export const USERNAME     = "username";
+export const COUNTRY_CODE = "code";
 
 // Disallow client side updates of the profile field (default is allowed)
 Users.deny({

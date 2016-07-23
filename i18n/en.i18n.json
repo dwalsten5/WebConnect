@@ -11,5 +11,13 @@
   "my_account": "My Account",
   "username": "Username",
   "password": "Password",
-  "try_signin_again": "Please try again"
+  "c_password": "Confirm Password",
+  "email": "E-Mail",
+  "name": "Name",
+  "organization": "Organization",
+  "country": "Country",
+  "try_signin_again": "Please try again",
+  "try_register_again": "We couldn't register your account! Check your information or try another username",
+  "mismatch_passwords": "The entered passwords do not match",
+  "empty_fields": "Fields cannot be left empty"
 }

@@ -1,8 +1,5 @@
-/**
- * Created by Phani on 7/23/2016.
- */
 // Countries from https://countrycode.org/
-countriesByName = {
+export const countriesByName = {
     "Afghanistan": "AF",
     "Albania": "AL",
     "Algeria": "DZ",
