@@ -6,8 +6,7 @@ import {BlazeLayout} from "meteor/kadira:blaze-layout";
 import "../../ui/layouts/app-body.js";
 import "../../ui/pages/home.js";
 import "../../ui/pages/about/about.js";
-
-// Import templates
+import "../../ui/pages/account/account.js";
 
 //Routes
 
@@ -22,5 +21,12 @@ FlowRouter.route("/about", {
     name: 'App.about',
     action() {
         BlazeLayout.render('app_body', {main: 'about'});
+    },
+});
+
+FlowRouter.route("/account", {
+    name: 'App.account',
+    action() {
+        BlazeLayout.render('app_body', {main: 'account'});
     },
 });

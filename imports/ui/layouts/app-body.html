@@ -17,6 +17,14 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/about">{{_ "about"}}</a></li>
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {{#if isSignedIn}}
+                        <li><a href="/account">{{_ "my_account"}}</a></li>
+                        <li><a href="#" id="logout_link">{{_ "logout"}}</a></li>
+                    {{else}}
+                        <li><a href="/account">{{_ "signin_register"}}</a></li>
+                    {{/if}}
+                </ul>
             </div>
         </div>
     </nav>
