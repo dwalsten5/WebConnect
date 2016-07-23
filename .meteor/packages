@@ -26,7 +26,10 @@ peppelg:bootstrap-3-modal
 kadira:flow-router
 kadira:blaze-layout
 fortawesome:fontawesome
-accounts-base
 accounts-password
 underscore
 tap:i18n
+aldeed:simple-schema
+aldeed:collection2
+alanning:roles
+mdg:validated-method
