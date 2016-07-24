@@ -66,12 +66,12 @@ Template.signin_register.events({
 
         if (valid) {
 
-            let profile                              = {};
-            profile[User.ORGANIZATION]               = org;
-            profile[User.NAME]                       = name;
-            profile[User.COUNTRY]                    = {};
-            profile[User.COUNTRY][User.NAME]         = country;
-            profile[User.COUNTRY][User.COUNTRY_CODE] = countriesByName[country];
+            let profile                                      = {};
+            profile[User.PROFILE_ORGANIZATION]               = org;
+            profile[User.PROFILE_NAME]                       = name;
+            profile[User.PROFILE_COUNTRY]                    = {};
+            profile[User.PROFILE_COUNTRY][User.COUNTRY_NAME] = country;
+            profile[User.PROFILE_COUNTRY][User.COUNTRY_CODE] = countriesByName[country];
 
             Accounts.createUser({
                 username: username,

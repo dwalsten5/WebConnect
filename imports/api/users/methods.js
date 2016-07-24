@@ -7,5 +7,5 @@ import {SimpleSchema} from "meteor/aldeed:simple-schema";
 import {Users} from "./users.js";
 
 export const currentUser = function () {
-    return Users.findOne({_id: Meteor.userId});
+    return Users.findOne({_id: Meteor.userId()});
 };
