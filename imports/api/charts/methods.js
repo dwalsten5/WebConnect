@@ -3,7 +3,11 @@
  */
 import {ValidatedMethod} from "meteor/mdg:validated-method";
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
-import * as Charts from "charts.js";
+import * as Charts from "./charts.js";
+
+const insertValidationContext = Charts.Charts.simpleSchema()
+    .pick([Charts.NAME, Charts.DESCRIPTION])
+    .newContext();
 
 /**
  * Inserts a new chart into the database, given the name and description.
@@ -11,14 +15,11 @@ import * as Charts from "charts.js";
  *
  * The unique _id of the chart is returned, or null on failure.
  */
-export const insert = new ValidatedMethod({
+export const insertChart = new ValidatedMethod({
     name: 'charts.insert',
-    validate: Charts.Charts.simpleSchema()
-        .pick([Charts.NAME, Charts.DESCRIPTION])
-        .validator({
-            clean: true,
-            filter: true
-        }),
+    validate: function (obj) {
+        return insertValidationContext.validate(obj);
+    },
     run({name, description}){
         let ownerId = Meteor.userId();
         if (!ownerId) {
