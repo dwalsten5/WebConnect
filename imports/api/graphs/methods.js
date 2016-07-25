@@ -5,10 +5,6 @@ import {ValidatedMethod} from "meteor/mdg:validated-method";
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
 import * as Graphs from "./graphs.js";
 
-const insertValidationContext = Graphs.Graphs.simpleSchema()
-    .pick([Graphs.OWNER])
-    .newContext();
-
 /**
  * Inserts a new graph into the database, given the owner id
  *
@@ -17,7 +13,7 @@ const insertValidationContext = Graphs.Graphs.simpleSchema()
 export const insertGraph = new ValidatedMethod({
     name: 'graphs.insert',
     validate: function (obj) {
-        insertValidationContext.validate(obj);
+        // No arguments to validate
     },
     run(){
         let ownerId = Meteor.userId();

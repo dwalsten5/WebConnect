@@ -78,13 +78,13 @@ Charts.schema = new SimpleSchema({
         type: [String],
         label: 'Upvoted user Ids',
         optional: false,
-        defaultValue: '',
+        defaultValue: [],
     },
     downvoted: {
         type: [String],
         label: 'Downvoted user Ids',
         optional: false,
-        defaultValue: '',
+        defaultValue: [],
     },
     downloads: {
         type: Number,
