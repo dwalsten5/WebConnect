@@ -22,5 +22,6 @@
   "empty_fields": "Fields cannot be left empty",
   "welcome": "Welcome",
   "account_info": "Account Information",
-  "join_date": "Join Date"
+  "join_date": "Join Date",
+  "admin_panel": "Admin Panel"
 }

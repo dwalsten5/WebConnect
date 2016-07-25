@@ -19,6 +19,9 @@
                     <li><a href="/about">{{_ "about"}}</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    {{#if isInRole 'admin'}}
+                        <li><a href="/admin">{{_ "admin_panel"}}</a></li>
+                    {{/if}}
                     {{#if isSignedIn}}
                         <li><a href="/account">{{_ "my_account"}}</a></li>
                         <li><a href="#" id="logout_link">{{_ "logout"}}</a></li>
