@@ -118,4 +118,4 @@ Graphs.schema.graphSchema = new SimpleSchema({
     }
 });
 
-Graphs.attachSchema(graphs.schema.graphSchema);
+Graphs.attachSchema(Graphs.schema.graphSchema);

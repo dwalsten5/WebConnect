@@ -3,3 +3,30 @@
  */
 import {ValidatedMethod} from "meteor/mdg:validated-method";
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
+import * as Graphs from "./graphs.js";
+
+const insertValidationContext = Graphs.Graphs.simpleSchema()
+    .pick([Graphs.OWNER])
+    .newContext();
+
+/**
+ * Inserts a new graph into the database, given the owner id
+ *
+ * The unique _id of the graph is returned, or null on failure.
+ */
+export const insertGraph = new ValidatedMethod({
+    name: 'graphs.insert',
+    validate: function (obj) {
+        insertValidationContext.validate(obj);
+    },
+    run(){
+        let ownerId = Meteor.userId();
+        if (!ownerId) {
+            throw new Meteor.Error('graphs.insert.accessDenied',
+                'A user must be logged in to insert a new Graph');
+        }
+        let graph           = {};
+        graph[Graphs.OWNER] = ownerId;
+        return Graphs.Graphs.insert(graph);
+    }
+});

@@ -4,6 +4,7 @@
 import {ValidatedMethod} from "meteor/mdg:validated-method";
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
 import * as Charts from "./charts.js";
+import {insertGraph} from "../graphs/methods.js";
 
 const insertValidationContext = Charts.Charts.simpleSchema()
     .pick([Charts.NAME, Charts.DESCRIPTION])
@@ -18,7 +19,7 @@ const insertValidationContext = Charts.Charts.simpleSchema()
 export const insertChart = new ValidatedMethod({
     name: 'charts.insert',
     validate: function (obj) {
-        return insertValidationContext.validate(obj);
+        insertValidationContext.validate(obj);
     },
     run({name, description}){
         let ownerId = Meteor.userId();
@@ -26,8 +27,7 @@ export const insertChart = new ValidatedMethod({
             throw new Meteor.Error('charts.insert.accessDenied',
                 'A user must be logged in to insert a new Chart');
         }
-        let graphId = undefined;// TODO create a graph here and insert it with the chart
-
+        let graphId               = insertGraph.call();
         let chart                 = {};
         chart[Charts.OWNER]       = ownerId;
         chart[Charts.NAME]        = name;
