@@ -9,7 +9,6 @@ import "../../ui/pages/about/about.js";
 import "../../ui/pages/account/account.js";
 
 //Routes
-
 FlowRouter.route("/", {
     name: 'App.home',
     action() {
@@ -28,5 +27,13 @@ FlowRouter.route("/account", {
     name: 'App.account',
     action() {
         BlazeLayout.render('app_body', {main: 'account'});
+    },
+});
+
+FlowRouter.route("/chart/:chartId", {
+    name: 'App.chart',
+    action(params) {
+        console.log(params.chartId);
+        //BlazeLayout.render('app_body', {main: 'chart'});
     },
 });

@@ -6,10 +6,6 @@ import {SimpleSchema} from "meteor/aldeed:simple-schema";
 import * as Charts from "./charts.js";
 import {insertGraph} from "../graphs/methods.js";
 
-const insertValidationContext = Charts.Charts.simpleSchema()
-    .pick([Charts.NAME, Charts.DESCRIPTION])
-    .newContext();
-
 /**
  * Inserts a new chart into the database, given the name and description.
  * A graph is created and associated with the chart automatically.
@@ -18,9 +14,12 @@ const insertValidationContext = Charts.Charts.simpleSchema()
  */
 export const insertChart = new ValidatedMethod({
     name: 'charts.insert',
-    validate: function (obj) {
-        insertValidationContext.validate(obj);
-    },
+    validate: Charts.Charts.simpleSchema()
+        .pick([Charts.NAME, Charts.DESCRIPTION])
+        .validator({
+            clean: true,
+            filter: true
+        }),
     run({name, description}){
         let ownerId = Meteor.userId();
         if (!ownerId) {
