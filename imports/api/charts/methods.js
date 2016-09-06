@@ -13,7 +13,7 @@ import {insertGraph} from "../graphs/methods.js";
  * The unique _id of the chart is returned, or null on failure.
  */
 export const insertChart = new ValidatedMethod({
-    name: 'charts.insert',
+    name: "charts.insert",
     validate: Charts.Charts.simpleSchema()
         .pick([Charts.NAME, Charts.DESCRIPTION])
         .validator({
@@ -23,8 +23,8 @@ export const insertChart = new ValidatedMethod({
     run({name, description}){
         let ownerId = Meteor.userId();
         if (!ownerId) {
-            throw new Meteor.Error('charts.insert.accessDenied',
-                'A user must be logged in to insert a new Chart');
+            throw new Meteor.Error("charts.insert.accessDenied",
+                "A user must be logged in to insert a new Chart");
         }
         let graphId               = insertGraph.call();
         let chart                 = {};
@@ -34,5 +34,24 @@ export const insertChart = new ValidatedMethod({
         chart[Charts.GRAPH]       = graphId;
 
         return Charts.Charts.insert(chart);
+    }
+});
+
+/**
+ * Returns an array of the current user's charts. An empty array
+ * returned if either there is no user logged in or there are no charts.
+ */
+export const getCurrentUserCharts = new ValidatedMethod({
+    name: "charts.currentUsersCharts",
+    validate: function (obj) {
+        // No arguments to validate
+    }
+    ,
+    run(){
+        let ownerId = Meteor.userId();
+        if (!ownerId) {
+            return [];
+        }
+        return Charts.Charts.find({_id: ownerId}).fetch();
     }
 });

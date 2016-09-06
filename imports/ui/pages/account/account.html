@@ -1,37 +1,51 @@
 <template name="account">
     {{#if isSignedIn}}
         <h2>{{_ "welcome"}}, {{currentUserRealName}}</h2>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <a href="#" id="editAccountInfo"><i class="fa fa-edit pull-right"></i></a>
-                <h4 class="panel-title">{{_ "account_info"}}</h4>
+        <div class="row">
+            <div class="panel panel-default col-xs-12">
+                <div class="panel-heading">
+                    <a href="#" id="editAccountInfo"><i class="fa fa-edit pull-right"></i></a>
+                    <h4 class="panel-title">{{_ "account_info"}}</h4>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <strong class="list-group-item-heading">{{_ "username"}}</strong>
+                            <p class="list-group-item-text">{{currentUsername}}</p>
+                        </div>
+                        <div class="list-group-item">
+                            <strong class="list-group-item-heading">{{_ "email"}}</strong>
+                            <p class="list-group-item-text">{{currentUserEmail}}</p>
+                        </div>
+                        <div class="list-group-item">
+                            <strong class="list-group-item-heading">{{_ "join_date"}}</strong>
+                            <p class="list-group-item-text">{{currentUserJoinDate}}</p>
+                        </div>
+                        <div class="list-group-item">
+                            <strong class="list-group-item-heading">{{_ "organization"}}</strong>
+                            <p class="list-group-item-text">{{currentUserOrganization}}</p>
+                        </div>
+                        <div class="list-group-item">
+                            <strong class="list-group-item-heading">{{_ "country"}}</strong>
+                            <p class="list-group-item-text">{{currentUserCountry}}</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="panel-body">
-                <div class="list-group">
-                    <div class="list-group-item">
-                        <strong class="list-group-item-heading">{{_ "username"}}</strong>
-                        <p class="list-group-item-text">{{currentUsername}}</p>
+            <div class="row">
+                <div class="panel panel-default col-xs-6">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">{{_ "your_charts"}}</h4>
                     </div>
-                    <div class="list-group-item">
-                        <strong class="list-group-item-heading">{{_ "email"}}</strong>
-                        <p class="list-group-item-text">{{currentUserEmail}}</p>
-                    </div>
-                    <div class="list-group-item">
-                        <strong class="list-group-item-heading">{{_ "join_date"}}</strong>
-                        <p class="list-group-item-text">{{currentUserJoinDate}}</p>
-                    </div>
-                    <div class="list-group-item">
-                        <strong class="list-group-item-heading">{{_ "organization"}}</strong>
-                        <p class="list-group-item-text">{{currentUserOrganization}}</p>
-                    </div>
-                    <div class="list-group-item">
-                        <strong class="list-group-item-heading">{{_ "country"}}</strong>
-                        <p class="list-group-item-text">{{currentUserCountry}}</p>
+                    <div class="panel-body">
+                        {{#if hasCharts}}
+                        {{else}}
+                            {{_ "you_dont_have_charts"}}
+                        {{/if}}
                     </div>
                 </div>
             </div>
         </div>
-
     {{else}}
         {{> signin_register}}
     {{/if}}
