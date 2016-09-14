@@ -68,3 +68,27 @@ export const getChartsInCatalog = new ValidatedMethod({
         return Charts.Charts.find({}).fetch();
     }
 });
+
+export const getChart = new ValidatedMethod({
+    name: "charts.getChart",
+    validate: function (obj) {
+        // Nothing to validate
+    },
+    run(id){
+        return Charts.Charts.findOne({_id: id});
+    }
+});
+
+export const getCharts = new ValidatedMethod({
+    name: "charts.getCharts",
+    validate: function (obj) {
+        // Nothing to validate
+    },
+    run(ids){
+        return Charts.Charts.find({
+            _id: {
+                $in: ids
+            }
+        }).fetch();
+    }
+});
