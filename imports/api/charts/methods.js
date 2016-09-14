@@ -45,13 +45,26 @@ export const getCurrentUserCharts = new ValidatedMethod({
     name: "charts.currentUsersCharts",
     validate: function (obj) {
         // No arguments to validate
-    }
-    ,
+    },
     run(){
         let ownerId = Meteor.userId();
         if (!ownerId) {
             return [];
         }
         return Charts.Charts.find({_id: ownerId}).fetch();
+    }
+});
+
+/**
+ * Returns all of the charts present in the catalog.
+ */
+export const getChartsInCatalog = new ValidatedMethod({
+    name: "charts.chartsInCatalog",
+    validate: function (obj) {
+        // No arguments to validate
+    },
+    run(){
+        // For now, all charts are in the catalog
+        return Charts.Charts.find({}).fetch();
     }
 });
