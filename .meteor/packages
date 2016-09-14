@@ -37,3 +37,4 @@ sach:flow-db-admin
 session@1.1.6
 momentjs:moment
 random@1.0.10
+nimble:restivus             # REST api helper
