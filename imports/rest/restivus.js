@@ -5,6 +5,7 @@
 import {Restivus} from "meteor/nimble:restivus";
 
 export const RestAPI = new Restivus({
+    version: "v1",
     useDefaultAuth: true,
     prettyJson: true
 });

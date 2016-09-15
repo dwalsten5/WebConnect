@@ -8,7 +8,7 @@ import * as RESTUtils from "/imports/rest/rest_utils.js";
 /**
  * Returns the flowchart catalog.
  */
-RestAPI.addRoute("v1/catalog", {
+RestAPI.addRoute("catalog", {
     get: function () {
         // This object has the mongo form of the flowcharts, ensure it matches the rest model.
         console.log("GET v1/catalog");
@@ -27,7 +27,7 @@ RestAPI.addRoute("v1/catalog", {
 /**
  * Returns a flowchart by id.
  */
-RestAPI.addRoute("v1/chart/:id", {
+RestAPI.addRoute("chart/:id", {
     get: function () {
         let id = this.urlParams.id;
         console.log("GET v1/chart/" + id);
@@ -46,7 +46,7 @@ RestAPI.addRoute("v1/chart/:id", {
 /**
  * Returns multiple flowcharts by id.
  */
-RestAPI.addRoute("v1/charts/:ids", {
+RestAPI.addRoute("charts/:ids", {
     get: function () {
         let ids = this.urlParams.ids;
         console.log("GET v1/charts/" + ids);
