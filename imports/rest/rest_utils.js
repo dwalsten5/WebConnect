@@ -4,6 +4,7 @@
 
 import * as Charts from "/imports/api/charts/charts.js";
 import * as Graphs from "/imports/api/graphs/graphs.js";
+import {getGraph} from "/imports/api/graphs/methods.js";
 
 /**
  * Names of the flowchart REST json fields.
@@ -45,7 +46,7 @@ export const formatChartForREST = function (rawChart) {
     chart[FLOWCHART_UPDATED_DATE] = rawChart[Charts.UPDATED_DATE];
     chart[FLOWCHART_VERSION]      = rawChart[Charts.VERSION];
     chart[FLOWCHART_OWNER]        = rawChart[Charts.OWNER];
-    chart[FLOWCHART_GRAPH]        = formatGraphForREST(rawChart[Charts.GRAPH]);
+    chart[FLOWCHART_GRAPH]        = formatGraphForREST(getGraph.call(rawChart[Charts.GRAPH_ID]));
     return chart;
 };
 

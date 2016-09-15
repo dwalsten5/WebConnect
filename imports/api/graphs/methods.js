@@ -26,3 +26,13 @@ export const insertGraph = new ValidatedMethod({
         return Graphs.Graphs.insert(graph);
     }
 });
+
+export const getGraph = new ValidatedMethod({
+    name: "charts.getGraph",
+    validate: function (obj) {
+        // Nothing to validate
+    },
+    run(id){
+        return Graphs.Graphs.findOne({_id: id});
+    }
+});

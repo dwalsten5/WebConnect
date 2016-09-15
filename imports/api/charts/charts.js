@@ -14,7 +14,7 @@ export const VERSION       = 'version';
 export const UPVOTED_IDS   = 'upvoted';
 export const DOWNVOTED_IDS = 'downvoted';
 export const DOWNLOADS     = 'downloads';
-export const GRAPH         = 'graph';
+export const GRAPH_ID      = 'graph';
 
 export const Charts = new Mongo.Collection('charts');
 

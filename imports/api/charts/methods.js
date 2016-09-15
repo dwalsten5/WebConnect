@@ -31,7 +31,7 @@ export const insertNewChart = new ValidatedMethod({
         chart[Charts.OWNER]       = ownerId;
         chart[Charts.NAME]        = name;
         chart[Charts.DESCRIPTION] = description;
-        chart[Charts.GRAPH]       = graphId;
+        chart[Charts.GRAPH_ID]    = graphId;
 
         return Charts.Charts.insert(chart);
     }
