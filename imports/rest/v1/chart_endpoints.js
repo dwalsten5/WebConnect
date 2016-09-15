@@ -32,14 +32,14 @@ RestAPI.addRoute("chart/:id", {
         let id = this.urlParams.id;
         console.log("GET v1/chart/" + id);
 
-        let chart = RESTUtils.formatChartForREST(getChart.call(id));
+        let chart = getChart.call(id);
         if (!chart) {
             return {
                 statusCode: 404,
                 body: "No chart with id " + id + " found"
             };
         }
-        return chart;
+        return RESTUtils.formatChartForREST(chart);
     }
 });
 
