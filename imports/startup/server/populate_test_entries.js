@@ -48,11 +48,6 @@ let TEST_GRAPH = {
     ]
 };
 
-
-Charts.Charts.remove({});
-Graphs.Graphs.remove({});
-
-
 if (!getGraph.call(TEST_GRAPH["_id"])) {
     Graphs.Graphs.insert(TEST_GRAPH);
     console.log("Added TEST_GRAPH");
