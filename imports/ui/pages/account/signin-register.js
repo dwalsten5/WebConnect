@@ -3,13 +3,15 @@
  */
 import {Meteor} from "meteor/meteor";
 import {Accounts} from "meteor/accounts-base";
-import {countriesByName} from "/imports/utils/countries";
+import {CountryCodes} from "meteor/3stack:country-codes";
 import "./signin-register.html";
 import * as User from "/imports/api/users/users.js";
 
 signinError   = new ReactiveVar(false);
 registerError = new ReactiveVar(false);
 registerMsg   = new ReactiveVar('');
+
+CountryCodes.setHighlightedCountries(["RW", "US", "ET"]);
 
 Template.signin_register.helpers({
     'signinError': function () {
@@ -25,7 +27,13 @@ Template.signin_register.helpers({
         return Meteor.loggingIn();
     },
     'countries': function () {
-        return _.keys(countriesByName);
+        return _.values(CountryCodes.getList());
+    },
+    "countrySelectProps": function () {
+        return {
+            class: "form-control",
+            id: "register_country"
+        };
     }
 });
 
@@ -71,7 +79,7 @@ Template.signin_register.events({
             profile[User.PROFILE_NAME]                       = name;
             profile[User.PROFILE_COUNTRY]                    = {};
             profile[User.PROFILE_COUNTRY][User.COUNTRY_NAME] = country;
-            profile[User.PROFILE_COUNTRY][User.COUNTRY_CODE] = countriesByName[country];
+            profile[User.PROFILE_COUNTRY][User.COUNTRY_CODE] = CountryCodes.countryCode[country];
 
             Accounts.createUser({
                 username: username,

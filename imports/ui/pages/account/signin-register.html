@@ -36,11 +36,7 @@
                     </div>
                     <div class="form-group {{#if registerError}}has-error{{/if}}">
                         <label class="control-label" for="register_country">{{_ "country"}}</label>
-                        <select class="form-control" id="register_country">
-                            {{#each countries}}
-                                <option value="{{this}}">{{this}}</option>
-                            {{/each}}
-                        </select>
+                        {{> countryCodeSelect selected=selectedCode props=countrySelectProps}}
                     </div>
                     <div class="form-group {{#if registerError}}has-error{{/if}}">
                         <label class="control-label" for="register_email">{{_ "email"}}</label>
