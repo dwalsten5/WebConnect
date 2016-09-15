@@ -12,8 +12,8 @@ import {insertGraph} from "../graphs/methods.js";
  *
  * The unique _id of the chart is returned, or null on failure.
  */
-export const insertChart = new ValidatedMethod({
-    name: "charts.insert",
+export const insertNewChart = new ValidatedMethod({
+    name: "charts.insertNewChart",
     validate: Charts.Charts.simpleSchema()
         .pick([Charts.NAME, Charts.DESCRIPTION])
         .validator({
@@ -23,7 +23,7 @@ export const insertChart = new ValidatedMethod({
     run({name, description}){
         let ownerId = Meteor.userId();
         if (!ownerId) {
-            throw new Meteor.Error("charts.insert.accessDenied",
+            throw new Meteor.Error("charts.insertNewChart.accessDenied",
                 "A user must be logged in to insert a new Chart");
         }
         let graphId               = insertGraph.call();
@@ -34,6 +34,32 @@ export const insertChart = new ValidatedMethod({
         chart[Charts.GRAPH]       = graphId;
 
         return Charts.Charts.insert(chart);
+    }
+});
+
+/**
+ * Attempts to upsert a chart. If the chart doesn't exist in the DB,
+ * it is inserted with a new ID. The chart owner must be the current
+ * user. The result of the upsert operation is returned.
+ */
+export const upsertChart = new ValidatedMethod({
+    name: "charts.upsertChart",
+    validate: Charts.Charts.simpleSchema().validator({
+        clean: true,
+        filter: true
+    }),
+    run({chart}){
+        let ownerId = Meteor.userId();
+        if (!ownerId) {
+            throw new Meteor.Error("charts.upsertChart.accessDenied",
+                "A user must be logged in to insert or update a Chart");
+        }
+        if (chart[Charts.OWNER] === ownerId) {
+            return Charts.Charts.upsert(chart);
+        } else {
+            throw new Meteor.Error("charts.upsertChart.accessDenied",
+                "The given Chart's owner does not match the current user");
+        }
     }
 });
 
