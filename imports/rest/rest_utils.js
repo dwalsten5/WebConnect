@@ -20,7 +20,7 @@ export const FLOWCHART_GRAPH        = "graph";
 /**
  * Names of the graph REST json fields.
  */
-export const GRAPH_NODES          = "nodes";
+export const GRAPH_NODES          = "vertices";
 export const GRAPH_EDGES          = "edges";
 export const GRAPH_NODE_ID        = "_id";
 export const GRAPH_NODE_NAME      = "name";
