@@ -4,7 +4,7 @@
  */
 
 import {Meteor} from "meteor/meteor";
-import "./app-body.html";
+import "./app_body.html";
 import "../components/app-loading/app-loading";
 
 Template.app_body.helpers({

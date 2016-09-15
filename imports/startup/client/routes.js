@@ -3,7 +3,7 @@
  */
 import {FlowRouter} from "meteor/kadira:flow-router";
 import {BlazeLayout} from "meteor/kadira:blaze-layout";
-import "../../ui/layouts/app-body.js";
+import "../../ui/layouts/app_body.js";
 import "../../ui/pages/home.js";
 import "../../ui/pages/about/about.js";
 import "../../ui/pages/account/account.js";
