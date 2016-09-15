@@ -9,7 +9,7 @@ import {getGraph} from "/imports/api/graphs/methods.js";
 /**
  * Names of the flowchart REST json fields.
  */
-export const FLOWCHART_ID           = "id";
+export const FLOWCHART_ID           = "_id";
 export const FLOWCHART_NAME         = "name";
 export const FLOWCHART_DESCRIPTION  = "description";
 export const FLOWCHART_UPDATED_DATE = "updatedDate";
@@ -22,15 +22,15 @@ export const FLOWCHART_GRAPH        = "graph";
  */
 export const GRAPH_NODES          = "nodes";
 export const GRAPH_EDGES          = "edges";
-export const GRAPH_NODE_ID        = "id";
+export const GRAPH_NODE_ID        = "_id";
 export const GRAPH_NODE_NAME      = "name";
 export const GRAPH_NODE_DETAILS   = "details";
 export const GRAPH_NODE_RESOURCES = "resources";
 export const GRAPH_NODE_IMAGES    = "images";
-export const GRAPH_EDGE_ID        = "id";
-export const GRAPH_EDGE_NAME      = "name";
-export const GRAPH_EDGE_SOURCE    = "source";
-export const GRAPH_EDGE_TARGET    = "target";
+export const GRAPH_EDGE_ID        = "_id";
+export const GRAPH_EDGE_NAME      = "_label";
+export const GRAPH_EDGE_SOURCE    = "_outV";
+export const GRAPH_EDGE_TARGET    = "_inV";
 export const GRAPH_EDGE_DETAILS   = "details";
 
 /**
@@ -57,12 +57,10 @@ export const formatChartForREST = function (rawChart) {
  */
 export const formatGraphForREST = function (rawGraph) {
     let graph          = {};
-    graph[GRAPH_NODES] = rawGraph[Graphs.NODES];
-    graph[GRAPH_EDGES] = rawGraph[Graphs.EDGES];
-    _.map(graph[GRAPH_NODES], function (rawNode) {
+    graph[GRAPH_NODES] = _.map(rawGraph[Graphs.NODES], function (rawNode) {
         return formatNodeForREST(rawNode);
     });
-    _.map(graph[GRAPH_EDGES], function (rawEdge) {
+    graph[GRAPH_EDGES] = _.map(rawGraph[Graphs.EDGES], function (rawEdge) {
         return formatEdgeForREST(rawEdge);
     });
     return graph;

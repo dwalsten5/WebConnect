@@ -43,7 +43,7 @@ Graphs.schema.nodeSchema  = new SimpleSchema({
         regEx: SimpleSchema.RegEx.Id,
         optional: false,
         autoValue: function () {
-            if (this.isInsert) {
+            if (this.isInsert && !this.isSet) {
                 return Random.id();
             }
         }
@@ -74,7 +74,7 @@ Graphs.schema.edgeSchema  = new SimpleSchema({
         regEx: SimpleSchema.RegEx.Id,
         optional: false,
         autoValue: function () {
-            if (this.isInsert) {
+            if (this.isInsert && !this.isSet) {
                 return Random.id();
             }
         }
