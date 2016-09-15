@@ -48,7 +48,7 @@ export const upsertChart = new ValidatedMethod({
         clean: true,
         filter: true
     }),
-    run({chart}){
+    run(chart){
         let ownerId = Meteor.userId();
         if (!ownerId) {
             throw new Meteor.Error("charts.upsertChart.accessDenied",
@@ -95,6 +95,9 @@ export const getChartsInCatalog = new ValidatedMethod({
     }
 });
 
+/**
+ * Gets a chart by ID.
+ */
 export const getChart = new ValidatedMethod({
     name: "charts.getChart",
     validate: function (obj) {
@@ -105,6 +108,9 @@ export const getChart = new ValidatedMethod({
     }
 });
 
+/**
+ * Gets multiple charts by ID.
+ */
 export const getCharts = new ValidatedMethod({
     name: "charts.getCharts",
     validate: function (obj) {
@@ -116,5 +122,25 @@ export const getCharts = new ValidatedMethod({
                 $in: ids
             }
         }).fetch();
+    }
+});
+
+/**
+ * Gets the n most downloaded charts.
+ */
+export const findMostDownloadedCharts = new ValidatedMethod({
+    name: "charts.findMostDownloadedCharts",
+    validate: function (n) {
+        check(n, Number);
+    },
+    run(n){
+        let sortParam               = {};
+        sortParam[Charts.DOWNLOADS] = -1;
+        return Charts.Charts.find({},
+            {
+                sort: sortParam,
+                limit: n
+            }
+        );
     }
 });
