@@ -2,7 +2,7 @@
  * Created by Phani on 9/14/2016.
  */
 import {RestAPI} from "/imports/rest/restivus.js";
-import {getChartsInCatalog, getChart, getCharts} from "/imports/api/charts/methods.js";
+import {getChartsInCatalog, getChart, getCharts, incrementChartDownload} from "/imports/api/charts/methods.js";
 import * as RESTUtils from "/imports/rest/rest_utils.js";
 
 /**
@@ -10,7 +10,6 @@ import * as RESTUtils from "/imports/rest/rest_utils.js";
  */
 RestAPI.addRoute("catalog", {
     get: function () {
-        // This object has the mongo form of the flowcharts, ensure it matches the rest model.
         console.log("GET v1/catalog");
         let rawChartsInCatalog = getChartsInCatalog.call();
 
@@ -39,6 +38,9 @@ RestAPI.addRoute("chart/:id", {
                 body: "No chart with id " + id + " found"
             };
         }
+        // New chart download, increment download
+        incrementChartDownload.call(id);
+        console.log(chart);
         return RESTUtils.formatChartForREST(chart);
     }
 });
@@ -53,6 +55,8 @@ RestAPI.addRoute("charts/:ids", {
 
         let charts = getCharts.call(ids.split(","));
         _.map(charts, function (chart) {
+            // New chart download, increment download
+            incrementChartDownload.call(chart["_id"]);
             return RESTUtils.formatChartForREST(chart);
         });
         return {

@@ -7,6 +7,7 @@ import "../../ui/layouts/app_body.js";
 import "../../ui/pages/home.js";
 import "../../ui/pages/about/about.js";
 import "../../ui/pages/account/account.js";
+import {incrementChartDownload} from "/imports/api/charts/methods.js";
 
 //Routes
 FlowRouter.route("/", {
@@ -33,7 +34,7 @@ FlowRouter.route("/account", {
 FlowRouter.route("/chart/:chartId", {
     name: 'App.chart',
     action(params) {
-        console.log(params.chartId);
+        incrementChartDownload.call(params.chartId);
         //BlazeLayout.render('app_body', {main: 'chart'});
     },
 });

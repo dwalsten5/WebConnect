@@ -144,3 +144,17 @@ export const findMostDownloadedCharts = new ValidatedMethod({
         );
     }
 });
+
+export const incrementChartDownload = new ValidatedMethod({
+    name: "charts.incrementChartDownload",
+    validate: function (id) {
+        // Nothing to validate
+    },
+    run(id){
+        let incField               = {};
+        incField[Charts.DOWNLOADS] = 1;
+        return Charts.Charts.update({"_id": id}, {
+            $inc: incField
+        });
+    }
+});
