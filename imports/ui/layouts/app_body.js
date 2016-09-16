@@ -16,6 +16,8 @@ Template.app_body.helpers({
 Template.app_body.events({
     'click #logout_link': function (evt) {
         evt.preventDefault();
-        Meteor.logout();
+        Meteor.logout(function (err) {
+            console.log(err);
+        });
     }
 });
