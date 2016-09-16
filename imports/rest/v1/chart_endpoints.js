@@ -40,7 +40,6 @@ RestAPI.addRoute("chart/:id", {
         }
         // New chart download, increment download
         incrementChartDownload.call(id);
-        console.log(chart);
         return RESTUtils.formatChartForREST(chart);
     }
 });
