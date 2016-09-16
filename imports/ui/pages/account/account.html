@@ -33,16 +33,8 @@
                 </div>
             </div>
             <div class="row">
-                <div class="panel panel-default col-xs-6">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">{{_ "your_charts"}}</h4>
-                    </div>
-                    <div class="panel-body">
-                        {{#if hasCharts}}
-                        {{else}}
-                            {{_ "you_dont_have_charts"}}
-                        {{/if}}
-                    </div>
+                <div class="col-xs-6">
+                    {{> user_charts}}
                 </div>
             </div>
         </div>

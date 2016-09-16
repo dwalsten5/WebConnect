@@ -3,6 +3,7 @@
  */
 import "./account.html";
 import "./signin-register.js";
+import "/imports/ui/components/user_charts/user_charts.js";
 import * as User from "/imports/api/users/users.js";
 import {currentUser} from "/imports/api/users/methods.js";
 import {getCurrentUserCharts} from "/imports/api/charts/methods.js";

@@ -1,0 +1,25 @@
+<template name="user_charts">
+    <div class="panel panel-default">
+        <div class="panel-heading">{{_ "your_charts"}}</div>
+        <div class="panel-body">
+            <div class="list-group">
+                {{#if Template.subscriptionsReady}}
+                    {{#if hasCharts}}
+                        {{#each userCharts}}
+                            <a href="/chart/{{_id}}" class="list-group-item">
+                                <h4 class="list-group-item-heading">{{getChartName this}}</h4>
+                                <p class="list-group-item-text">{{getChartDescription this}}</p>
+                            </a>
+                        {{/each}}
+                    {{else}}
+                        <div class="well">
+                            {{_ "you_dont_have_charts"}}
+                        </div>
+                    {{/if}}
+                {{else}}
+                    {{> app_loading}}
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</template>
