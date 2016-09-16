@@ -2,7 +2,7 @@
  * Created by Phani on 9/15/2016.
  */
 import "./user_charts.html";
-import "/imports/ui/components/app-loading/app_loading.js";
+import "/imports/ui/components/app_loading/app_loading.js";
 import * as Charts from "/imports/api/charts/charts.js";
 import {getCurrentUserCharts} from "/imports/api/charts/methods.js";
 

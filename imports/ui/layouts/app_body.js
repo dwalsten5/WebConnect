@@ -5,7 +5,7 @@
 
 import {Meteor} from "meteor/meteor";
 import "./app_body.html";
-import "../components/app-loading/app_loading";
+import "../components/app_loading/app_loading";
 
 Template.app_body.helpers({
     'isSignedIn': function () {

@@ -3,7 +3,7 @@
  */
 
 import "./top_downloaded_charts.html";
-import "/imports/ui/components/app-loading/app_loading.js";
+import "/imports/ui/components/app_loading/app_loading.js";
 import * as Charts from "/imports/api/charts/charts.js";
 import {findMostDownloadedCharts} from "/imports/api/charts/methods.js";
 
