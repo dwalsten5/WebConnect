@@ -2,18 +2,18 @@
  * Created by Phani on 9/15/2016.
  */
 
-import "./top_charts.html";
+import "./top_downloaded_charts.html";
 import "/imports/ui/components/app-loading/app_loading.js";
 import * as Charts from "/imports/api/charts/charts.js";
 import {findMostDownloadedCharts} from "/imports/api/charts/methods.js";
 
 const NUM_TOP_CHARTS = 10;
 
-Template.top_charts.onCreated(function () {
+Template.top_downloaded_charts.onCreated(function () {
     this.subscribe("topCharts", NUM_TOP_CHARTS);
 });
 
-Template.top_charts.helpers({
+Template.top_downloaded_charts.helpers({
     topCharts: function () {
         return findMostDownloadedCharts.call(NUM_TOP_CHARTS).fetch();
     },
@@ -22,5 +22,8 @@ Template.top_charts.helpers({
     },
     getChartDescription: function (chart) {
         return chart[Charts.DESCRIPTION];
+    },
+    getChartDownloads: function (chart) {
+        return chart[Charts.DOWNLOADS];
     }
 });

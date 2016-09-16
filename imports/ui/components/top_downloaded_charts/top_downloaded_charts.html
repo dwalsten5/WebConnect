@@ -1,11 +1,12 @@
-<template name="top_charts">
+<template name="top_downloaded_charts">
     <div class="panel panel-default">
-        <div class="panel-heading"><i class="fa fa-star"></i>&nbsp;{{_ "top_charts"}}</div>
+        <div class="panel-heading"><i class="fa fa-star"></i>&nbsp;{{_ "top_downloaded_charts"}}</div>
         <div class="panel-body">
             <div class="list-group">
                 {{#if Template.subscriptionsReady}}
                     {{#each topCharts}}
                         <a href="/chart/{{_id}}" class="list-group-item">
+                            <span class="badge">{{getChartDownloads this}}</span>
                             <h4 class="list-group-item-heading">{{getChartName this}}</h4>
                             <p class="list-group-item-text">{{getChartDescription this}}</p>
                         </a>
