@@ -27,5 +27,8 @@
   "you_dont_have_charts": "You don't have any charts. Why not create one?",
   "top_downloaded_charts": "Most Downloaded Flowcharts",
   "your_charts": "Your Flowcharts",
-  "signin_to_see_your_charts": "Please sign in to see your charts"
+  "signin_to_see_your_charts": "Please sign in to see your charts",
+  "home_intro": "Search for a device or problem, or select an example",
+  "home_title": "Welcome to Tech Connect",
+  "search_hint": "e.g Pulse Oximeter"
 }
