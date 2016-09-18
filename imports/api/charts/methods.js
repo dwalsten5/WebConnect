@@ -4,7 +4,9 @@
 import {ValidatedMethod} from "meteor/mdg:validated-method";
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
 import * as Charts from "./charts.js";
-import {insertGraph} from "../graphs/methods.js";
+import * as Graphs from "/imports/api/graphs/graphs.js";
+import * as Comments from "/imports/api/comments/comments.js";
+import {insertGraph, getGraph} from "../graphs/methods.js";
 
 /**
  * Inserts a new chart into the database, given the name and description.
@@ -158,5 +160,40 @@ export const incrementChartDownload = new ValidatedMethod({
         return Charts.Charts.update(selector, {
             $inc: incField
         });
+    }
+});
+
+/**
+ * Returns an array of all the resources found in the given chart by ID,
+ * or null if the chart wasn't found. This includes all resources from
+ * every graph node and comment.
+ */
+export const getAllChartResources = new ValidatedMethod({
+    name: "charts.getAllChartResources",
+    validate: function (id) {
+        //Nothing to validate
+    },
+    run(id){
+        let chart = Charts.Charts.findOne({_id: id});
+        if (!chart) {
+            return null;
+        }
+        let resList = [];
+        let graph   = getGraph.call(chart[Charts.GRAPH_ID]);
+        let cmnts   = [];
+
+        cmnts = cmnts.concat(chart[Charts.COMMENTS]);
+        _.each(graph[Graphs.NODES], function (node) {
+            // Add all comments of nodes
+            cmnts   = cmnts.concat(node[Graphs.NODE_COMMENTS]);
+            // Add the node's resources
+            resList = resList.concat(node[Graphs.NODE_IMAGES]);
+            resList = resList.concat(node[Graphs.NODE_RESOURCES]);
+        });
+        _.each(cmnts, function (cmnt) {
+            // Add the comment's  attachments
+            resList.push(cmnt[Comments.ATTACHMENT]);
+        });
+        return _.without(_.uniq(resList), null);
     }
 });

@@ -10,6 +10,7 @@ import * as Charts from "/imports/api/charts/charts.js";
 import * as Graphs from "/imports/api/graphs/graphs.js";
 import * as Comments from "/imports/api/comments/comments.js";
 import {getGraph} from "/imports/api/graphs/methods.js";
+import {getAllChartResources} from "/imports/api/charts/methods";
 
 /**
  * Names of the flowchart REST json fields.
@@ -21,6 +22,7 @@ export const FLOWCHART_UPDATED_DATE = "updatedDate";
 export const FLOWCHART_VERSION      = "version";
 export const FLOWCHART_OWNER        = "owner";
 export const FLOWCHART_GRAPH        = "graph";
+export const FLOWCHART_ALL_RES      = "all_res";
 export const FLOWCHART_COMMENTS     = "comments";
 
 /**
@@ -62,6 +64,7 @@ export const formatChartForREST = function (rawChart) {
     chart[FLOWCHART_UPDATED_DATE] = rawChart[Charts.UPDATED_DATE];
     chart[FLOWCHART_VERSION]      = rawChart[Charts.VERSION];
     chart[FLOWCHART_OWNER]        = rawChart[Charts.OWNER];
+    chart[FLOWCHART_ALL_RES]      = getAllChartResources.call(rawChart[Charts.CHART_ID]);
     chart[FLOWCHART_COMMENTS]     = _.map(rawChart[Charts.COMMENTS], function (rawComment) {
         return formatCommentForREST(rawComment);
     });
