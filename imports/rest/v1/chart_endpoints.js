@@ -6,6 +6,12 @@ import * as Charts from "/imports/api/charts/charts.js";
 import {getChartsInCatalog, getChart, getCharts, incrementChartDownload} from "/imports/api/charts/methods.js";
 import * as RESTUtils from "/imports/rest/rest_utils.js";
 
+const RESPONSE_STATUS         = "status";
+const RESPONSE_MESSAGE        = "message";
+const RESPONSE_DATA           = "data";
+const RESPONSE_STATUS_SUCCESS = "success";
+const RESPONSE_STATUS_ERROR   = "error";
+
 /**
  * Returns the flowchart catalog.
  */
@@ -18,9 +24,13 @@ RestAPI.addRoute("catalog", {
         let charts = _.map(rawChartsInCatalog, function (chart) {
             return _.omit(RESTUtils.formatChartForREST(chart), RESTUtils.FLOWCHART_GRAPH);
         });
-        return {
+
+        let response              = {};
+        response[RESPONSE_STATUS] = RESPONSE_STATUS_SUCCESS;
+        response[RESPONSE_DATA]   = {
             flowcharts: charts
-        }
+        };
+        return response;
     }
 });
 
@@ -34,33 +44,51 @@ RestAPI.addRoute("chart/:id", {
 
         let chart = getChart.call(id);
         if (!chart) {
+            let response               = {};
+            response[RESPONSE_STATUS]  = RESPONSE_STATUS_ERROR;
+            response[RESPONSE_MESSAGE] = "The given chart id wasn't found.";
             return {
                 statusCode: 404,
-                body: "No chart with id " + id + " found"
+                body: response
             };
         }
         // New chart download, increment download
         incrementChartDownload.call(id);
-        return RESTUtils.formatChartForREST(chart);
+        chart = RESTUtils.formatChartForREST(chart);
+
+        let response              = {};
+        response[RESPONSE_STATUS] = RESPONSE_STATUS_SUCCESS;
+        response[RESPONSE_DATA]   = {
+            flowchart: chart
+        };
+        return response;
     }
 });
 
 /**
  * Returns multiple flowcharts by id.
  */
-RestAPI.addRoute("charts/:ids", {
+RestAPI.addRoute("charts", {
     get: function () {
-        let ids = this.urlParams.ids;
-        console.log("GET v1/charts/" + ids);
+        let ids = this.bodyParams.ids;
+        console.log(this.bodyParams);
+        console.log("POST v1/charts/ with ids: " + ids);
 
-        let charts = getCharts.call(ids.split(","));
-        charts     = _.map(charts, function (chart) {
+        let charts   = getCharts.call(ids);
+        charts       = _.map(charts, function (chart) {
             // New chart download, increment download
             incrementChartDownload.call(chart[Charts.CHART_ID]);
             return RESTUtils.formatChartForREST(chart);
         });
-        return {
+        let good_ids = _.pluck(charts, Charts.CHART_ID);
+        let bad_ids  = _.difference(ids, good_ids);
+
+        let response              = {};
+        response[RESPONSE_STATUS] = RESPONSE_STATUS_SUCCESS;
+        response[RESPONSE_DATA]   = {
+            bad_ids: bad_ids,
             flowcharts: charts
         };
+        return response;
     }
 });
