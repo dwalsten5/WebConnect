@@ -12,12 +12,3 @@ Template.app_body.helpers({
         return Meteor.userId() != null;
     }
 });
-
-Template.app_body.events({
-    'click #logout_link': function (evt) {
-        evt.preventDefault();
-        Meteor.logout(function (err) {
-            console.log(err);
-        });
-    }
-});

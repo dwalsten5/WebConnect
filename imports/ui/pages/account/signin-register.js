@@ -38,11 +38,11 @@ Template.signin_register.helpers({
 });
 
 Template.signin_register.events({
-    'click #signin_btn': function (evt, template) {
+    "click #signin_btn": function (evt, template) {
         evt.preventDefault();
-        let username = template.find('#signin_username').value;
-        let password = template.find('#signin_password').value;
-        Meteor.loginWithPassword(username, password, function (err) {
+        let email    = template.find("#signin_email").value;
+        let password = template.find("#signin_password").value;
+        Meteor.loginWithPassword(email, password, function (err) {
             if (err) {
                 signinError.set(true);
             } else {
@@ -50,15 +50,14 @@ Template.signin_register.events({
             }
         });
     },
-    'click #register_btn': function (evt, template) {
+    "click #register_btn": function (evt, template) {
         evt.preventDefault();
-        let name        = template.find('#register_name').value;
-        let org         = template.find('#register_organization').value;
-        let countryCode = template.find('#register_country').value;
-        let email       = template.find('#register_email').value;
-        let username    = template.find('#register_username').value;
-        let password    = template.find('#register_password').value;
-        let cpassword   = template.find('#register_c_password').value;
+        let name        = template.find("#register_name").value;
+        let org         = template.find("#register_organization").value;
+        let countryCode = template.find("#register_country").value;
+        let email       = template.find("#register_email").value;
+        let password    = template.find("#register_password").value;
+        let cpassword   = template.find("#register_c_password").value;
 
         let valid = true;
         if (cpassword !== password) {
@@ -66,14 +65,13 @@ Template.signin_register.events({
             registerError.set(true);
             registerMsg.set(TAPi18n.__("mismatch_passwords"));
         }
-        if (_.isEmpty(name) || _.isEmpty(org) || _.isEmpty(countryCode) || _.isEmpty(password)) {
+        if (_.isEmpty(name) || _.isEmpty(org) || _.isEmpty(countryCode) || _.isEmpty(password) || _.isEmpty(email)) {
             valid = false;
             registerError.set(true);
             registerMsg.set(TAPi18n.__("empty_fields"));
         }
 
         if (valid) {
-
             let profile                                      = {};
             profile[User.PROFILE_ORGANIZATION]               = org;
             profile[User.PROFILE_NAME]                       = name;
@@ -82,7 +80,7 @@ Template.signin_register.events({
             profile[User.PROFILE_COUNTRY][User.COUNTRY_CODE] = countryCode;
 
             Accounts.createUser({
-                username: username,
+                username: email,
                 email: email,
                 password: password,
                 profile: profile

@@ -7,6 +7,7 @@ import "../../ui/layouts/app_body.js";
 import "../../ui/pages/home.js";
 import "../../ui/pages/about/about.js";
 import "../../ui/pages/account/account.js";
+import "../../ui/pages/account/logout.js";
 import {incrementChartDownload} from "/imports/api/charts/methods.js";
 
 //Routes
@@ -28,6 +29,13 @@ FlowRouter.route("/account", {
     name: 'App.account',
     action() {
         BlazeLayout.render('app_body', {main: 'account'});
+    },
+});
+
+FlowRouter.route("/logout", {
+    name: 'App.account',
+    action() {
+        BlazeLayout.render('app_body', {main: 'logout'});
     },
 });
 
