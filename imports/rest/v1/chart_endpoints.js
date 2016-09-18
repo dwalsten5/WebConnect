@@ -69,9 +69,9 @@ RestAPI.addRoute("chart/:id", {
  * Returns multiple flowcharts by id.
  */
 RestAPI.addRoute("charts", {
-    get: function () {
+    post: function () {
         let ids = this.bodyParams.ids;
-        console.log("GET v1/charts/ with ids: " + ids);
+        console.log("POST v1/charts/ with ids: " + ids);
 
         let charts   = getCharts.call(ids);
         charts       = _.map(charts, function (chart) {
