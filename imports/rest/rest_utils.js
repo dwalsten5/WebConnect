@@ -40,7 +40,7 @@ export const GRAPH_EDGE_DETAILS   = "details";
  */
 export const formatChartForREST = function (rawChart) {
     let chart                     = {};
-    chart[FLOWCHART_ID]           = rawChart["_id"];
+    chart[FLOWCHART_ID]           = rawChart[Charts.CHART_ID];
     chart[FLOWCHART_NAME]         = rawChart[Charts.NAME];
     chart[FLOWCHART_DESCRIPTION]  = rawChart[Charts.DESCRIPTION];
     chart[FLOWCHART_UPDATED_DATE] = rawChart[Charts.UPDATED_DATE];
@@ -68,7 +68,7 @@ export const formatGraphForREST = function (rawGraph) {
 
 function formatNodeForREST(rawNode) {
     let node                   = {};
-    node[GRAPH_NODE_ID]        = rawNode["_id"];
+    node[GRAPH_NODE_ID]        = rawNode[Graphs.NODE_ID];
     node[GRAPH_NODE_NAME]      = rawNode[Graphs.NODE_NAME];
     node[GRAPH_NODE_DETAILS]   = rawNode[Graphs.NODE_DETAILS];
     node[GRAPH_NODE_RESOURCES] = rawNode[Graphs.NODE_RESOURCES];
@@ -78,7 +78,7 @@ function formatNodeForREST(rawNode) {
 
 function formatEdgeForREST(rawEdge) {
     let edge                 = {};
-    edge[GRAPH_EDGE_ID]      = rawEdge["_id"];
+    edge[GRAPH_EDGE_ID]      = rawEdge[Graphs.EDGE_ID];
     edge[GRAPH_EDGE_NAME]    = rawEdge[Graphs.EDGE_NAME];
     edge[GRAPH_EDGE_SOURCE]  = rawEdge[Graphs.EDGE_SOURCE];
     edge[GRAPH_EDGE_TARGET]  = rawEdge[Graphs.EDGE_TARGET];

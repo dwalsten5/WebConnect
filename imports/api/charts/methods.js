@@ -153,7 +153,9 @@ export const incrementChartDownload = new ValidatedMethod({
     run(id){
         let incField               = {};
         incField[Charts.DOWNLOADS] = 1;
-        return Charts.Charts.update({"_id": id}, {
+        let selector               = {};
+        selector[Charts.CHART_ID]  = id;
+        return Charts.Charts.update(selector, {
             $inc: incField
         });
     }

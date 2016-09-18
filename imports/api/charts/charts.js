@@ -3,20 +3,23 @@
  */
 import {Mongo} from "meteor/mongo";
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
+import {Comments} from "/imports/api/comments/comments.js";
 
 // Constants for document field names
-export const OWNER         = 'owner';
-export const NAME          = 'name';
-export const DESCRIPTION   = 'description';
-export const CREATED_DATE  = 'createdDate';
-export const UPDATED_DATE  = 'updatedDate';
-export const VERSION       = 'version';
-export const UPVOTED_IDS   = 'upvoted';
-export const DOWNVOTED_IDS = 'downvoted';
-export const DOWNLOADS     = 'downloads';
-export const GRAPH_ID      = 'graph';
+export const CHART_ID      = "_id";
+export const OWNER         = "owner";
+export const NAME          = "name";
+export const DESCRIPTION   = "description";
+export const CREATED_DATE  = "createdDate";
+export const UPDATED_DATE  = "updatedDate";
+export const VERSION       = "version";
+export const UPVOTED_IDS   = "upvoted";
+export const DOWNVOTED_IDS = "downvoted";
+export const DOWNLOADS     = "downloads";
+export const GRAPH_ID      = "graph";
+export const COMMENTS      = "comments";
 
-export const Charts = new Mongo.Collection('charts');
+export const Charts = new Mongo.Collection("charts");
 
 // Deny all client updates, everything going to be done through methods
 Charts.deny({
@@ -35,7 +38,7 @@ Charts.schema = new SimpleSchema({
     owner: {
         type: String,
         regEx: SimpleSchema.RegEx.Id,
-        label: 'Owner User Id',
+        label: "Owner User Id",
         optional: false
     },
     name: {
@@ -71,18 +74,18 @@ Charts.schema = new SimpleSchema({
     version: {
         type: String,
         optional: false,
-        defaultValue: '1.0',
+        defaultValue: "1.0",
         regEx: /\d+(\.\d+)+/
     },
     upvoted: {
         type: [String],
-        label: 'Upvoted user Ids',
+        label: "Upvoted user Ids",
         optional: false,
         defaultValue: [],
     },
     downvoted: {
         type: [String],
-        label: 'Downvoted user Ids',
+        label: "Downvoted user Ids",
         optional: false,
         defaultValue: [],
     },
@@ -95,6 +98,12 @@ Charts.schema = new SimpleSchema({
         type: String,
         optional: false,
         regEx: SimpleSchema.RegEx.Id
+    },
+    comments: {
+        type: [Comments.schema],
+        label: "Comments",
+        optional: false,
+        defaultValue: []
     }
 });
 

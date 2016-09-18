@@ -4,22 +4,26 @@
 import {Mongo} from "meteor/mongo";
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
 import {Random} from "meteor/random";
+import {Comments} from "/imports/api/comments/comments.js";
 
 // Constants for document field names
-export const NODES          = 'nodes';
-export const EDGES          = 'edges';
-export const OWNER          = 'owner';
-export const NODE_NAME      = 'name';
-export const NODE_DETAILS   = 'details';
-export const NODE_RESOURCES = 'resources';
-export const NODE_IMAGES    = 'images';
-export const EDGE_ID        = '_id';
-export const EDGE_NAME      = 'name';
-export const EDGE_SOURCE    = 'source';
-export const EDGE_TARGET    = 'target';
-export const EDGE_DETAILS   = 'details';
+export const GRAPH_ID       = "_id";
+export const NODES          = "nodes";
+export const EDGES          = "edges";
+export const OWNER          = "owner";
+export const NODE_ID        = "_id";
+export const NODE_NAME      = "name";
+export const NODE_DETAILS   = "details";
+export const NODE_RESOURCES = "resources";
+export const NODE_IMAGES    = "images";
+export const NODE_COMMENTS  = "comments";
+export const EDGE_ID        = "_id";
+export const EDGE_NAME      = "name";
+export const EDGE_SOURCE    = "source";
+export const EDGE_TARGET    = "target";
+export const EDGE_DETAILS   = "details";
 
-export const Graphs = new Mongo.Collection('graphs');
+export const Graphs = new Mongo.Collection("graphs");
 
 // Deny all client updates, except updates by the owner
 Graphs.allow({
@@ -55,7 +59,7 @@ Graphs.schema.nodeSchema  = new SimpleSchema({
     details: {
         type: String,
         optional: false,
-        defaultValue: ''
+        defaultValue: ""
     },
     resources: {
         type: [String],
@@ -64,6 +68,12 @@ Graphs.schema.nodeSchema  = new SimpleSchema({
     },
     images: {
         type: [String],
+        optional: false,
+        defaultValue: []
+    },
+    comments: {
+        type: [Comments.schema],
+        label: "Comments",
         optional: false,
         defaultValue: []
     }
@@ -86,7 +96,7 @@ Graphs.schema.edgeSchema  = new SimpleSchema({
     details: {
         type: String,
         optional: false,
-        defaultValue: ''
+        defaultValue: ""
     },
     source: {
         type: String,
@@ -103,7 +113,7 @@ Graphs.schema.graphSchema = new SimpleSchema({
     owner: {
         type: String,
         regEx: SimpleSchema.RegEx.Id,
-        label: 'Owner User Id',
+        label: "Owner User Id",
         optional: false
     },
     nodes: {

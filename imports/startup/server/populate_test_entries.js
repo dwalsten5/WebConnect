@@ -48,11 +48,11 @@ let TEST_GRAPH = {
     ]
 };
 
-if (!getGraph.call(TEST_GRAPH["_id"])) {
+if (!getGraph.call(TEST_GRAPH[Graphs.GRAPH_ID])) {
     Graphs.Graphs.insert(TEST_GRAPH);
     console.log("Added TEST_GRAPH");
 }
-if (!getChart.call(TEST_CHART["_id"])) {
+if (!getChart.call(TEST_CHART[Charts.CHART_ID])) {
     Charts.Charts.insert(TEST_CHART);
     console.log("Added TEST_CHART");
 }

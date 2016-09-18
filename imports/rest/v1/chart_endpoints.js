@@ -2,6 +2,7 @@
  * Created by Phani on 9/14/2016.
  */
 import {RestAPI} from "/imports/rest/restivus.js";
+import * as Charts from "/imports/api/charts/charts.js";
 import {getChartsInCatalog, getChart, getCharts, incrementChartDownload} from "/imports/api/charts/methods.js";
 import * as RESTUtils from "/imports/rest/rest_utils.js";
 
@@ -55,7 +56,7 @@ RestAPI.addRoute("charts/:ids", {
         let charts = getCharts.call(ids.split(","));
         _.map(charts, function (chart) {
             // New chart download, increment download
-            incrementChartDownload.call(chart["_id"]);
+            incrementChartDownload.call(chart[Charts.CHART_ID]);
             return RESTUtils.formatChartForREST(chart);
         });
         return {
