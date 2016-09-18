@@ -1,9 +1,14 @@
 /**
  * Created by Phani on 9/14/2016.
+ *
+ * This file provides methods to ensure proper structure of
+ * returned objects in the REST interface. This maps the mongo
+ * objects into the REST format. It is mostly similar with some differences.
  */
 
 import * as Charts from "/imports/api/charts/charts.js";
 import * as Graphs from "/imports/api/graphs/graphs.js";
+import * as Comments from "/imports/api/comments/comments.js";
 import {getGraph} from "/imports/api/graphs/methods.js";
 
 /**
@@ -16,6 +21,7 @@ export const FLOWCHART_UPDATED_DATE = "updatedDate";
 export const FLOWCHART_VERSION      = "version";
 export const FLOWCHART_OWNER        = "owner";
 export const FLOWCHART_GRAPH        = "graph";
+export const FLOWCHART_COMMENTS     = "comments";
 
 /**
  * Names of the graph REST json fields.
@@ -27,11 +33,21 @@ export const GRAPH_NODE_NAME      = "name";
 export const GRAPH_NODE_DETAILS   = "details";
 export const GRAPH_NODE_RESOURCES = "resources";
 export const GRAPH_NODE_IMAGES    = "images";
+export const GRAPH_NODE_COMMENTS  = "comments";
 export const GRAPH_EDGE_ID        = "_id";
 export const GRAPH_EDGE_NAME      = "_label";
 export const GRAPH_EDGE_SOURCE    = "_outV";
 export const GRAPH_EDGE_TARGET    = "_inV";
 export const GRAPH_EDGE_DETAILS   = "details";
+
+/**
+ * Names of the comment REST json fields.
+ */
+export const COMMENT_ID           = "_id";
+export const COMMENT_OWNER        = "owner";
+export const COMMENT_TEXT         = "text";
+export const COMMENT_CREATED_DATE = "CREATED_DATE";
+export const COMMENT_ATTACHMENT   = "attachment";
 
 /**
  * Converts the MongoDB representation of a chart into
@@ -46,6 +62,9 @@ export const formatChartForREST = function (rawChart) {
     chart[FLOWCHART_UPDATED_DATE] = rawChart[Charts.UPDATED_DATE];
     chart[FLOWCHART_VERSION]      = rawChart[Charts.VERSION];
     chart[FLOWCHART_OWNER]        = rawChart[Charts.OWNER];
+    chart[FLOWCHART_COMMENTS]     = _.map(rawChart[Charts.COMMENTS], function (rawComment) {
+        return formatCommentForREST(rawComment);
+    });
     chart[FLOWCHART_GRAPH]        = formatGraphForREST(getGraph.call(rawChart[Charts.GRAPH_ID]));
     return chart;
 };
@@ -73,6 +92,9 @@ function formatNodeForREST(rawNode) {
     node[GRAPH_NODE_DETAILS]   = rawNode[Graphs.NODE_DETAILS];
     node[GRAPH_NODE_RESOURCES] = rawNode[Graphs.NODE_RESOURCES];
     node[GRAPH_NODE_IMAGES]    = rawNode[Graphs.NODE_IMAGES];
+    node[GRAPH_NODE_COMMENTS]  = _.map(rawNode[Charts.COMMENTS], function (rawComment) {
+        return formatCommentForREST(rawComment);
+    });
     return node;
 }
 
@@ -84,4 +106,14 @@ function formatEdgeForREST(rawEdge) {
     edge[GRAPH_EDGE_TARGET]  = rawEdge[Graphs.EDGE_TARGET];
     edge[GRAPH_EDGE_DETAILS] = rawEdge[Graphs.EDGE_DETAILS];
     return edge;
+}
+
+function formatCommentForREST(rawComment) {
+    let comment                   = {};
+    comment[COMMENT_ID]           = rawComment[Comments.COMMENT_ID];
+    comment[COMMENT_OWNER]        = rawComment[Comments.OWNER];
+    comment[COMMENT_TEXT]         = rawComment[Comments.TEXT];
+    comment[COMMENT_CREATED_DATE] = rawComment[Comments.CREATED_DATE];
+    comment[COMMENT_ATTACHMENT]   = rawComment[Comments.ATTACHMENT];
+    return comment;
 }

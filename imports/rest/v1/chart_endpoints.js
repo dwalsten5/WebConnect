@@ -54,7 +54,7 @@ RestAPI.addRoute("charts/:ids", {
         console.log("GET v1/charts/" + ids);
 
         let charts = getCharts.call(ids.split(","));
-        _.map(charts, function (chart) {
+        charts     = _.map(charts, function (chart) {
             // New chart download, increment download
             incrementChartDownload.call(chart[Charts.CHART_ID]);
             return RESTUtils.formatChartForREST(chart);

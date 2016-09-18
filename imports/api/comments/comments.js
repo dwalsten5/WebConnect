@@ -4,11 +4,11 @@
 import {SimpleSchema} from "meteor/aldeed:simple-schema";
 
 // Constants for document field names
-export const COMMENT_ID  = "_id";
-export const OWNER       = "owner";
-export const TEXT        = "text";
-export const createdDate = "createdDate";
-export const ATTACHMENT  = "attachment";
+export const COMMENT_ID   = "_id";
+export const OWNER        = "owner";
+export const TEXT         = "text";
+export const CREATED_DATE = "CREATED_DATE";
+export const ATTACHMENT   = "attachment";
 
 export const Comments = {};
 
