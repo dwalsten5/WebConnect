@@ -28,11 +28,37 @@ export const insertGraph = new ValidatedMethod({
 });
 
 export const getGraph = new ValidatedMethod({
-    name: "charts.getGraph",
+    name: "graphs.getGraph",
     validate: function (obj) {
         // Nothing to validate
     },
     run(id){
         return Graphs.Graphs.findOne({_id: id});
+    }
+});
+
+/**
+ * Attempts to upsert a graph. If the graph doesn't exist in the DB,
+ * it is inserted with a new ID. The graph owner must be the current
+ * user. The result of the upsert operation is returned.
+ */
+export const upsertGraph = new ValidatedMethod({
+    name: "graphs.upsertGraph",
+    validate: Graphs.Graphs.simpleSchema().validator({
+        clean: true,
+        filter: true
+    }),
+    run(graph){
+        let ownerId = Meteor.userId();
+        if (!ownerId) {
+            throw new Meteor.Error("graphs.upsertGraph.accessDenied",
+                "A user must be logged in to insert or update a Graph");
+        }
+        if (graph[Graphs.OWNER] === ownerId) {
+            return Graphs.Graphs.upsert(graph);
+        } else {
+            throw new Meteor.Error("graphs.upsertGraph.accessDenied",
+                "The given Graph's owner does not match the current user");
+        }
     }
 });

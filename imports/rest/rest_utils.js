@@ -48,7 +48,7 @@ export const GRAPH_EDGE_DETAILS   = "details";
 export const COMMENT_ID           = "_id";
 export const COMMENT_OWNER        = "owner";
 export const COMMENT_TEXT         = "text";
-export const COMMENT_CREATED_DATE = "CREATED_DATE";
+export const COMMENT_CREATED_DATE = "createdDate";
 export const COMMENT_ATTACHMENT   = "attachment";
 
 /**
@@ -118,5 +118,8 @@ function formatCommentForREST(rawComment) {
     comment[COMMENT_TEXT]         = rawComment[Comments.TEXT];
     comment[COMMENT_CREATED_DATE] = rawComment[Comments.CREATED_DATE];
     comment[COMMENT_ATTACHMENT]   = rawComment[Comments.ATTACHMENT];
+    if (!comment[COMMENT_ATTACHMENT]) {
+        comment[COMMENT_ATTACHMENT] = null;
+    }
     return comment;
 }
