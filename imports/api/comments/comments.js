@@ -18,7 +18,9 @@ Comments.schema = new SimpleSchema({
         type: SimpleSchema.RegEx.Id,
         optional: false,
         autoValue: function () {
-            return Random.id();
+            if (!this.isSet) {
+                return Random.id();
+            }
         }
     },
     owner: {
