@@ -64,6 +64,91 @@ function getChartComment(chartId, commentId) {
     return null;
 }
 
+export const deleteComment = new ValidatedMethod({
+    name: "comments.deleteComment",
+    validate: new SimpleSchema({
+        chartId: {
+            type: SimpleSchema.RegEx.Id
+        },
+        commentId: {
+            type: SimpleSchema.RegEx.Id
+        }
+    }).validator(),
+    run({chartId:chartId, commentId:commentId}){
+        if (!getChart.call(chartId)) {
+            return false;
+        }
+        let comment = getComment.call({chartId, commentId});
+        if (!comment) {
+            return false;
+        }
+        if (!deleteChartComment(chartId, commentId)) {
+            return deleteNodeComment(chartId, commentId);
+        }
+        return true;
+    }
+});
+
+function deleteNodeComment(chartId, commentId) {
+    // Couldn't get the $pull modifier to work,
+    // so just update all of the nodes ;(
+
+    let chart = getChart.call(chartId);
+    if (!chart) {
+        return false;
+    }
+
+    let graphId  = chart[Charts.GRAPH_ID];
+    let selector = {};
+    let fields   = {};
+
+    selector[Graphs.GRAPH_ID]         = graphId;
+    selector[Graphs.NODES.concat(".")
+        .concat(Graphs.NODE_COMMENTS).concat(".")
+        .concat(Comments.COMMENT_ID)] = commentId;
+    fields[Graphs.NODES.concat(".$")] = 1;
+
+    let limitedGraph = Graphs.Graphs.findOne(selector, {fields: fields});
+    if (limitedGraph) {
+        let node        = limitedGraph[Graphs.NODES][0];
+        let newComments = _.reject(node[Graphs.NODE_COMMENTS], function (cmnt) {
+            return cmnt[Comments.COMMENT_ID] == commentId;
+        });
+
+        let set                                                      = {};
+        set[Graphs.NODES.concat(".$.").concat(Graphs.NODE_COMMENTS)] = newComments;
+
+        Graphs.Graphs.update(selector, {
+            $set: set
+        });
+        return true;
+    }
+    return false;
+}
+
+function deleteChartComment(chartId, commentId) {
+    // Couldn't get the $pull modifier to work so
+    // the whole chart object is just updated ;(
+
+    let chart = getChart.call(chartId);
+    if (!chart) {
+        return null;
+    }
+    let newComments = _.reject(chart[Charts.COMMENTS], function (cmnt) {
+        return cmnt[Comments.COMMENT_ID] == commentId;
+    });
+    if (newComments.length != chart[Charts.COMMENTS].length) {
+        // Something removed
+        let set              = {};
+        set[Charts.COMMENTS] = newComments;
+        Charts.Charts.update({_id: chartId}, {
+            $set: set
+        });
+        return true;
+    }
+    return false;
+}
+
 /**
  * Inserts a comment into a chart or node. If nodeId is not defined,
  * then the comment is posted to the chart. Returns the id of the new

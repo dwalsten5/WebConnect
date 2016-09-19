@@ -5,7 +5,7 @@ import {RestAPI} from "/imports/rest/restivus.js";
 import * as Charts from "/imports/api/charts/charts.js";
 import {getChartsInCatalog, getChart, getCharts, incrementChartDownload} from "/imports/api/charts/methods.js";
 import * as Comments from "/imports/api/comments/comments.js";
-import {insertComment, getComment} from "/imports/api/comments/methods.js";
+import {insertComment, getComment, deleteComment} from "/imports/api/comments/methods.js";
 import * as RESTUtils from "/imports/rest/rest_utils.js";
 
 const RESPONSE_STATUS         = "status";
@@ -42,7 +42,7 @@ RestAPI.addRoute("catalog", {
 RestAPI.addRoute("chart/:id", {
     get: function () {
         let id = this.urlParams.id;
-        console.log("GET v1/chart/" + id);
+        console.log("GET chart/" + id);
 
         let chart = getChart.call(id);
         if (!chart) {
@@ -73,7 +73,7 @@ RestAPI.addRoute("chart/:id", {
 RestAPI.addRoute("charts", {
     post: function () {
         let ids = this.bodyParams.ids;
-        console.log("POST v1/charts/ with ids: " + ids);
+        console.log("POST charts/ with ids: " + ids);
 
         let charts   = getCharts.call(ids);
         charts       = _.map(charts, function (chart) {
@@ -98,6 +98,7 @@ RestAPI.addRoute("chart/:id/comment", {authRequired: true}, {
     post: function () {
         let chartId = this.urlParams.id;
         let nodeId  = this.bodyParams.nodeId;
+        console.log("POST chart/" + chartId + "/comment");
 
         let comment                  = {};
         comment[Comments.TEXT]       = this.bodyParams.text;
@@ -121,5 +122,36 @@ RestAPI.addRoute("chart/:id/comment", {authRequired: true}, {
                 body: response
             };
         }
+    },
+    delete: function () {
+        let chartId   = this.urlParams.id;
+        let commentId = this.bodyParams.commentId;
+        console.log("DELETE chart/" + chartId + "/comment: " + commentId);
+
+        let comment = getComment.call({chartId, commentId});
+        if (comment && comment[Comments.OWNER] == this.userId) {
+            let res      = deleteComment.call({chartId: chartId, commentId: commentId});
+            let response = {};
+
+            if (res) {
+                response[RESPONSE_STATUS] = RESPONSE_STATUS_SUCCESS;
+                response[RESPONSE_DATA]   = {
+                    flowchart: RESTUtils.formatChartForREST(getChart.call(chartId))
+                };
+                return response;
+            }
+        }
+        let response              = {};
+        response[RESPONSE_STATUS] = RESPONSE_STATUS_ERROR;
+        if (comment) {
+            response[RESPONSE_MESSAGE] = "You don't have permission to do this.";
+        } else {
+            response[RESPONSE_MESSAGE] = "The given commentId doesn't exist in the chart.";
+        }
+        return {
+            statusCode: 401,
+            body: response
+        };
+
     }
 });
