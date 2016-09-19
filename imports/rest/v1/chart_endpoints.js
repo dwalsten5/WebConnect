@@ -130,6 +130,7 @@ RestAPI.addRoute("chart/:id/comment", {authRequired: true}, {
 
         let comment = getComment.call({chartId, commentId});
         if (comment && comment[Comments.OWNER] == this.userId) {
+            // Comment exists somewhere, try and delete it
             let res      = deleteComment.call({chartId: chartId, commentId: commentId});
             let response = {};
 
@@ -141,6 +142,7 @@ RestAPI.addRoute("chart/:id/comment", {authRequired: true}, {
                 return response;
             }
         }
+        // Comment doesn't exist
         let response              = {};
         response[RESPONSE_STATUS] = RESPONSE_STATUS_ERROR;
         if (comment) {

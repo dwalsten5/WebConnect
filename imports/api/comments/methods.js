@@ -93,6 +93,10 @@ function deleteNodeComment(chartId, commentId) {
     // Couldn't get the $pull modifier to work,
     // so just update all of the nodes ;(
 
+    // Finds the node that contains the comment, filters out
+    // the comment with commentId, and updates the node with
+    // the new set of comments.
+
     let chart = getChart.call(chartId);
     if (!chart) {
         return false;
@@ -110,7 +114,10 @@ function deleteNodeComment(chartId, commentId) {
 
     let limitedGraph = Graphs.Graphs.findOne(selector, {fields: fields});
     if (limitedGraph) {
+        // This node has the comment
         let node        = limitedGraph[Graphs.NODES][0];
+
+        // Filter out the comment
         let newComments = _.reject(node[Graphs.NODE_COMMENTS], function (cmnt) {
             return cmnt[Comments.COMMENT_ID] == commentId;
         });
@@ -118,6 +125,7 @@ function deleteNodeComment(chartId, commentId) {
         let set                                                      = {};
         set[Graphs.NODES.concat(".$.").concat(Graphs.NODE_COMMENTS)] = newComments;
 
+        // Commit the changes
         Graphs.Graphs.update(selector, {
             $set: set
         });
@@ -134,6 +142,7 @@ function deleteChartComment(chartId, commentId) {
     if (!chart) {
         return null;
     }
+    // Filter out any comments with commentId
     let newComments = _.reject(chart[Charts.COMMENTS], function (cmnt) {
         return cmnt[Comments.COMMENT_ID] == commentId;
     });
