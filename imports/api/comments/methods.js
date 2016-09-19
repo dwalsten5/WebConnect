@@ -1,7 +1,6 @@
 /**
  * Created by Phani on 9/18/2016.
  */
-import {Random} from "meteor/random";
 import * as Comments from "./comments.js";
 import * as Charts from "/imports/api/charts/charts.js";
 import {getChart} from "/imports/api/charts/methods.js";
