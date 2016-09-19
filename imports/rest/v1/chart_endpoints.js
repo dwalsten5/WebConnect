@@ -92,11 +92,12 @@ RestAPI.addRoute("charts", {
                 bad_ids: bad_ids,
                 flowcharts: charts
             };
+        } else {
+            response[RESPONSE_DATA] = {
+                bad_ids: [],
+                flowcharts: []
+            };
         }
-        response[RESPONSE_DATA] = {
-            bad_ids: [],
-            flowcharts: []
-        };
         return response;
     }
 });
