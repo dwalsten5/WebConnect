@@ -96,6 +96,9 @@ export const insertComment = new ValidatedMethod({
     },
     run({comment:cmnt, chartId:chartId, nodeId:nodeId}) {
         Comments.Comments.schema.clean(cmnt);
+        if (!getChart.call(chartId)) {
+            return null;
+        }
         if (nodeId) {
             return insertNodeComment(cmnt, chartId, nodeId);
         }
