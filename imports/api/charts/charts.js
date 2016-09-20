@@ -69,8 +69,10 @@ Charts.schema = new SimpleSchema({
         type: Date,
         optional: false,
         autoValue: function () {
-            if (this.isUpdate || this.isInsert || this.isUpsert) {
+            if (this.isInsert) {
                 return new Date();
+            } else if (this.isUpsert) {
+                return {$setOnInsert: new Date()};
             }
         }
     },
