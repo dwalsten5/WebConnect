@@ -18,6 +18,10 @@ export const DOWNVOTED_IDS = "downvoted";
 export const DOWNLOADS     = "downloads";
 export const GRAPH_ID      = "graph";
 export const COMMENTS      = "comments";
+export const RESOURCES     = "resources";
+export const IMAGE         = "image";
+export const TYPE          = "type";
+export const ALLOWED_TYPES = ["misc", "device", "problem"];
 
 export const Charts = new Mongo.Collection("charts");
 
@@ -38,7 +42,6 @@ Charts.schema = new SimpleSchema({
     owner: {
         type: String,
         regEx: SimpleSchema.RegEx.Id,
-        label: "Owner User Id",
         optional: false
     },
     name: {
@@ -101,7 +104,21 @@ Charts.schema = new SimpleSchema({
     },
     comments: {
         type: [Comments.schema],
-        label: "Comments",
+        optional: false,
+        defaultValue: []
+    },
+    type: {
+        type: String,
+        allowedValues: ALLOWED_TYPES,
+        optional: false,
+        defaultValue: ALLOWED_TYPES[0]
+    },
+    image: {
+        type: String,
+        optional: true
+    },
+    resources: {
+        type: [String],
         optional: false,
         defaultValue: []
     }
