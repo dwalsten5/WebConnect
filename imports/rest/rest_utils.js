@@ -24,6 +24,7 @@ export const FLOWCHART_OWNER        = "owner";
 export const FLOWCHART_GRAPH        = "graph";
 export const FLOWCHART_ALL_RES      = "all_res";
 export const FLOWCHART_COMMENTS     = "comments";
+export const FLOWCHART_SCORE        = "score";
 
 /**
  * Names of the graph REST json fields.
@@ -64,11 +65,14 @@ export const formatChartForREST = function (rawChart) {
     chart[FLOWCHART_UPDATED_DATE] = rawChart[Charts.UPDATED_DATE];
     chart[FLOWCHART_VERSION]      = rawChart[Charts.VERSION];
     chart[FLOWCHART_OWNER]        = rawChart[Charts.OWNER];
+    chart[FLOWCHART_SCORE]        = rawChart[Charts.UPVOTED_IDS].length - rawChart[Charts.DOWNVOTED_IDS].length;
+    chart[FLOWCHART_GRAPH]        = formatGraphForREST(getGraph.call(rawChart[Charts.GRAPH_ID]));
     chart[FLOWCHART_ALL_RES]      = getAllChartResources.call(rawChart[Charts.CHART_ID]);
-    chart[FLOWCHART_COMMENTS]     = _.map(rawChart[Charts.COMMENTS], function (rawComment) {
+
+    chart[FLOWCHART_COMMENTS] = _.map(rawChart[Charts.COMMENTS], function (rawComment) {
         return formatCommentForREST(rawComment);
     });
-    chart[FLOWCHART_GRAPH]        = formatGraphForREST(getGraph.call(rawChart[Charts.GRAPH_ID]));
+
     return chart;
 };
 
