@@ -12,35 +12,35 @@ import {incrementChartDownload} from "/imports/api/charts/methods.js";
 
 //Routes
 FlowRouter.route("/", {
-    name: 'App.home',
+    name: "App.home",
     action() {
-        BlazeLayout.render('app_body', {main: 'home'});
+        BlazeLayout.render("app_body", {main: "home"});
     },
 });
 
 FlowRouter.route("/about", {
-    name: 'App.about',
+    name: "App.about",
     action() {
-        BlazeLayout.render('app_body', {main: 'about'});
+        BlazeLayout.render("app_body", {main: "about"});
     },
 });
 
 FlowRouter.route("/account", {
-    name: 'App.account',
+    name: "App.account",
     action() {
-        BlazeLayout.render('app_body', {main: 'account'});
+        BlazeLayout.render("app_body", {main: "account"});
     },
 });
 
 FlowRouter.route("/logout", {
-    name: 'App.account',
+    name: "App.account",
     action() {
-        BlazeLayout.render('app_body', {main: 'logout'});
+        BlazeLayout.render("app_body", {main: "logout"});
     },
 });
 
 FlowRouter.route("/chart/:chartId", {
-    name: 'App.chart',
+    name: "App.chart",
     action(params) {
         incrementChartDownload.call(params.chartId);
         //BlazeLayout.render('app_body', {main: 'chart'});

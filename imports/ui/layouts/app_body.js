@@ -8,7 +8,7 @@ import "./app_body.html";
 import "../components/app_loading/app_loading";
 
 Template.app_body.helpers({
-    'isSignedIn': function () {
+    "isSignedIn": function () {
         return Meteor.userId() != null;
     }
 });
