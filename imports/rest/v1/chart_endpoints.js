@@ -75,21 +75,29 @@ RestAPI.addRoute("charts", {
         let ids = this.bodyParams.ids;
         console.log("POST charts/ with ids: " + ids);
 
-        let charts   = getCharts.call(ids);
-        charts       = _.map(charts, function (chart) {
-            // New chart download, increment download
-            incrementChartDownload.call(chart[Charts.CHART_ID]);
-            return RESTUtils.formatChartForREST(chart);
-        });
-        let good_ids = _.pluck(charts, Charts.CHART_ID);
-        let bad_ids  = _.difference(ids, good_ids);
-
         let response              = {};
         response[RESPONSE_STATUS] = RESPONSE_STATUS_SUCCESS;
-        response[RESPONSE_DATA]   = {
-            bad_ids: bad_ids,
-            flowcharts: charts
-        };
+
+        if (ids) {
+            let charts   = getCharts.call({ids: ids});
+            charts       = _.map(charts, function (chart) {
+                // New chart download, increment download
+                incrementChartDownload.call(chart[Charts.CHART_ID]);
+                return RESTUtils.formatChartForREST(chart);
+            });
+            let good_ids = _.pluck(charts, Charts.CHART_ID);
+            let bad_ids  = _.difference(ids, good_ids);
+
+            response[RESPONSE_DATA] = {
+                bad_ids: bad_ids,
+                flowcharts: charts
+            };
+        } else {
+            response[RESPONSE_DATA] = {
+                bad_ids: [],
+                flowcharts: []
+            };
+        }
         return response;
     }
 });

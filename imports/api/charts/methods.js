@@ -115,10 +115,12 @@ export const getChart = new ValidatedMethod({
  */
 export const getCharts = new ValidatedMethod({
     name: "charts.getCharts",
-    validate: function (obj) {
-        // Nothing to validate
-    },
-    run(ids){
+    validate: new SimpleSchema({
+        ids: {
+            type: [String]
+        }
+    }).validator(),
+    run({ids:ids}){
         return Charts.Charts.find({
             _id: {
                 $in: ids
