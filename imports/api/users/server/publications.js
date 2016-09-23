@@ -4,6 +4,6 @@
 import {Meteor} from "meteor/meteor";
 import {Users} from "../users.js";
 
-Meteor.publish('users.currentUser', function () {
+Meteor.publish("users.currentUser", function () {
     return Users.find({_id: this.userId});
 });

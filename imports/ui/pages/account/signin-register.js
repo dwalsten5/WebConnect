@@ -9,24 +9,24 @@ import * as User from "/imports/api/users/users.js";
 
 signinError   = new ReactiveVar(false);
 registerError = new ReactiveVar(false);
-registerMsg   = new ReactiveVar('');
+registerMsg   = new ReactiveVar("");
 
 CountryCodes.setHighlightedCountries(["RW", "US", "ET"]);
 
 Template.signin_register.helpers({
-    'signinError': function () {
+    "signinError": function () {
         return signinError.get();
     },
-    'registerError': function () {
+    "registerError": function () {
         return registerError.get();
     },
-    'registerMsg': function () {
+    "registerMsg": function () {
         return registerMsg.get();
     },
-    'signingin': function () {
+    "signingin": function () {
         return Meteor.loggingIn();
     },
-    'countries': function () {
+    "countries": function () {
         return _.values(CountryCodes.getList());
     },
     "countrySelectProps": function () {

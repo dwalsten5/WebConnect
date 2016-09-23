@@ -26,7 +26,7 @@ Comments.schema = new SimpleSchema({
     owner: {
         type: String,
         regEx: SimpleSchema.RegEx.Id,
-        label: 'Owner User Id',
+        label: "Owner User Id",
         optional: false
     },
     text: {
